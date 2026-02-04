@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Heart, X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import Confetti from "react-confetti";
@@ -15,13 +15,14 @@ const CelebrationModal: React.FC<CelebrationModalProps> = ({
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
-    // Set initial window size
-    setWindowSize({ width: window.innerWidth, height: window.innerHeight });
-
     // Update on resize
     const handleResize = () => {
       setWindowSize({ width: window.innerWidth, height: window.innerHeight });
     };
+
+    // Set initial window size
+    handleResize();
+
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -51,16 +52,16 @@ const CelebrationModal: React.FC<CelebrationModalProps> = ({
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0, opacity: 0 }}
             transition={{ type: "spring", stiffness: 200, damping: 25 }}
-            className="relative bg-white rounded-2xl shadow-2xl p-8 max-w-2xl w-full mx-4 z-10"
+            className="relative modal-box bg-base-100 max-w-2xl w-full"
           >
             {/* Close Button */}
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
               onClick={onClose}
-              className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-full transition"
+              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
             >
-              <X size={24} className="text-gray-600" />
+              <X size={24} />
             </motion.button>
 
             {/* Content */}
@@ -89,7 +90,7 @@ const CelebrationModal: React.FC<CelebrationModalProps> = ({
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={onClose}
-                className="px-8 py-3 bg-gradient-to-r from-pink-500 to-rose-500 text-white font-bold rounded-lg hover:from-pink-600 hover:to-rose-600 transition shadow-lg"
+                className="btn btn-primary transition-all duration-300"
               >
                 Close
               </motion.button>
@@ -106,8 +107,6 @@ export default function App() {
   const [isMobile, setIsMobile] = useState(false);
   const [noScale, setNoScale] = useState(1);
   const [showCelebration, setShowCelebration] = useState(false);
-  const noButtonRef = useRef<HTMLButtonElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
 
   // Detect mobile/tablet
   useEffect(() => {
@@ -120,9 +119,8 @@ export default function App() {
   }, []);
 
   const handleNoClick = () => {
-    // Shrink more dramatically (~50% each click, disappears after ~2 clicks)
-    const newScale = noScale * 0.5;
-    setNoScale(newScale);
+    // Disappear immediately after 1 click
+    setNoScale(0);
   };
 
   const handleYesClick = () => {
@@ -139,10 +137,7 @@ export default function App() {
       </div>
 
       {/* Main Content */}
-      <div
-        ref={containerRef}
-        className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4 py-8"
-      >
+      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4 py-8">
         {/* Heart Icon */}
         <motion.div
           initial={{ scale: 0 }}
@@ -183,18 +178,24 @@ export default function App() {
             onClick={handleYesClick}
             onHoverStart={() => setYesHovered(true)}
             onHoverEnd={() => setYesHovered(false)}
-            whileHover={!isMobile ? { scale: 1.05 } : {}}
             animate={{
               scale: isMobile && yesHovered ? 1.15 : 1 + (1 - noScale) * 0.75,
             }}
-            transition={{ type: "spring", stiffness: 200, damping: 15 }}
-            className={`font-bold rounded-lg transition-all duration-300 cursor-pointer shadow-lg hover:shadow-xl bg-linear-to-r from-pink-400 to-rose-400 text-white hover:from-pink-500 hover:to-rose-500 px-8 sm:px-10 py-4 text-lg sm:text-xl`}
+            transition={{
+              type: "spring",
+              stiffness: 150,
+              damping: 20,
+              mass: 1.2,
+            }}
+            className="btn btn-primary transition-all duration-500 text-lg px-8 sm:px-10 py-4"
           >
             <motion.span
-              animate={yesHovered && !isMobile ? { scale: [1, 1.15, 1] } : {}}
+              animate={
+                yesHovered && !isMobile ? { scale: [1, 1.15, 1] } : { scale: 1 }
+              }
               transition={{
                 repeat: yesHovered && !isMobile ? Infinity : 0,
-                // duration: 1.5,
+                duration: 1.5,
               }}
             >
               💕 Yes!
@@ -203,17 +204,21 @@ export default function App() {
 
           {/* No Button - Shrinks and disappears */}
           <AnimatePresence>
-            {noScale > 0.05 && (
+            {noScale > 0 && (
               <motion.button
-                ref={noButtonRef}
                 onClick={handleNoClick}
                 animate={{
                   scale: noScale,
                   opacity: noScale > 0.2 ? 1 : noScale / 0.2,
                 }}
                 exit={{ scale: 0, opacity: 0 }}
-                transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                className="px-8 sm:px-10 py-4 text-lg sm:text-xl font-bold rounded-lg bg-linear-to-r from-gray-300 to-gray-400 text-gray-700 hover:from-gray-400 hover:to-gray-500 transition-all duration-300 cursor-pointer shadow-lg hover:shadow-xl origin-center"
+                transition={{
+                  type: "spring",
+                  stiffness: 200,
+                  damping: 15,
+                  duration: 0.3,
+                }}
+                className="btn btn-neutral transition-all duration-300 origin-center"
               >
                 No
               </motion.button>
