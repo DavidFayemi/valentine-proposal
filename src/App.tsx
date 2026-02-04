@@ -29,7 +29,10 @@ const CelebrationModal: React.FC<CelebrationModalProps> = ({
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center"
+          data-theme="caramellate"
+        >
           {/* Confetti Background */}
           <Confetti width={windowSize.width} height={windowSize.height} />
 
@@ -38,7 +41,7 @@ const CelebrationModal: React.FC<CelebrationModalProps> = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-black bg-opacity-50"
+            className="absolute inset-0 bg-black/30"
             onClick={onClose}
           />
 
@@ -78,25 +81,9 @@ const CelebrationModal: React.FC<CelebrationModalProps> = ({
                 🎉 Yay! 🎉
               </h2>
 
-              <p className="text-xl text-gray-600 mb-6">
+              <p className="text-xl text-gray-600 mb-8">
                 You've made me the happiest person! I love you so much! 💕
               </p>
-
-              {/* Video Container */}
-              <div className="mb-6 rounded-lg overflow-hidden bg-gray-900">
-                <div
-                  className="relative w-full"
-                  style={{ paddingBottom: "56.25%" }}
-                >
-                  <iframe
-                    className="absolute top-0 left-0 w-full h-full"
-                    src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
-                    title="Celebration Video"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
-                </div>
-              </div>
 
               <motion.button
                 whileHover={{ scale: 1.05 }}
@@ -116,14 +103,11 @@ const CelebrationModal: React.FC<CelebrationModalProps> = ({
 
 export default function App() {
   const [yesHovered, setYesHovered] = useState(false);
-  const [noPosition, setNoPosition] = useState({ x: 0, y: 0 });
   const [isMobile, setIsMobile] = useState(false);
   const [noScale, setNoScale] = useState(1);
   const [showCelebration, setShowCelebration] = useState(false);
   const noButtonRef = useRef<HTMLButtonElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  const MAX_NO_PRESSES = 15;
 
   // Detect mobile/tablet
   useEffect(() => {
@@ -135,32 +119,10 @@ export default function App() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Handle no button movement on desktop
-  const handleNoMouseEnter = () => {
-    if (isMobile) return;
-
-    if (!noButtonRef.current || !containerRef.current) return;
-
-    const container = containerRef.current.getBoundingClientRect();
-    const button = noButtonRef.current.getBoundingClientRect();
-
-    // Generate random position within container bounds
-    const maxX = container.width - button.width - 20;
-    const maxY = container.height - button.height - 20;
-
-    const randomX = Math.random() * maxX;
-    const randomY = Math.random() * maxY;
-
-    setNoPosition({ x: randomX, y: randomY });
-  };
-
   const handleNoClick = () => {
-    // Calculate new scale (shrink by 8% each click)
-    const newScale = noScale * 0.92;
-
-    if (newScale > 0.05) {
-      setNoScale(newScale);
-    }
+    // Shrink more dramatically (~50% each click, disappears after ~2 clicks)
+    const newScale = noScale * 0.5;
+    setNoScale(newScale);
   };
 
   const handleYesClick = () => {
@@ -222,30 +184,21 @@ export default function App() {
             onHoverStart={() => setYesHovered(true)}
             onHoverEnd={() => setYesHovered(false)}
             whileHover={!isMobile ? { scale: 1.05 } : {}}
-            animate={
-              isMobile && yesHovered
-                ? { scale: 1.15 }
-                : noScale < 0.1
-                  ? { scale: Math.min(1.5, 1 + (1 - noScale) * 0.5) }
-                  : { scale: 1 + (1 - noScale) * 0.2 }
-            }
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            className={`font-bold rounded-lg transition-all duration-300 cursor-pointer shadow-lg hover:shadow-xl ${
-              yesHovered && !isMobile
-                ? "bg-pink-500 text-white px-8 sm:px-10 py-4 text-lg sm:text-xl"
-                : "bg-linear-to-r from-pink-400 to-rose-400 text-white hover:from-pink-500 hover:to-rose-500 px-8 sm:px-10 py-4 text-lg sm:text-xl"
-            }`}
+            animate={{
+              scale: isMobile && yesHovered ? 1.15 : 1 + (1 - noScale) * 0.75,
+            }}
+            transition={{ type: "spring", stiffness: 200, damping: 15 }}
+            className={`font-bold rounded-lg transition-all duration-300 cursor-pointer shadow-lg hover:shadow-xl bg-linear-to-r from-pink-400 to-rose-400 text-white hover:from-pink-500 hover:to-rose-500 px-8 sm:px-10 py-4 text-lg sm:text-xl`}
           >
-            {yesHovered && !isMobile ? (
-              <motion.span
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{ repeat: Infinity, duration: 1.5 }}
-              >
-                Yes! 💕
-              </motion.span>
-            ) : (
-              "Yes!"
-            )}
+            <motion.span
+              animate={yesHovered && !isMobile ? { scale: [1, 1.15, 1] } : {}}
+              transition={{
+                repeat: yesHovered && !isMobile ? Infinity : 0,
+                // duration: 1.5,
+              }}
+            >
+              💕 Yes!
+            </motion.span>
           </motion.button>
 
           {/* No Button - Shrinks and disappears */}
@@ -253,17 +206,13 @@ export default function App() {
             {noScale > 0.05 && (
               <motion.button
                 ref={noButtonRef}
-                onMouseEnter={handleNoMouseEnter}
                 onClick={handleNoClick}
-                animate={
-                  isMobile && yesHovered
-                    ? { scale: 0.7, opacity: 0.5 }
-                    : isMobile
-                      ? { scale: 1, opacity: 1 }
-                      : { x: noPosition.x, y: noPosition.y, scale: noScale }
-                }
+                animate={{
+                  scale: noScale,
+                  opacity: noScale > 0.2 ? 1 : noScale / 0.2,
+                }}
                 exit={{ scale: 0, opacity: 0 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                transition={{ type: "spring", stiffness: 200, damping: 15 }}
                 className="px-8 sm:px-10 py-4 text-lg sm:text-xl font-bold rounded-lg bg-linear-to-r from-gray-300 to-gray-400 text-gray-700 hover:from-gray-400 hover:to-gray-500 transition-all duration-300 cursor-pointer shadow-lg hover:shadow-xl origin-center"
               >
                 No
@@ -271,16 +220,6 @@ export default function App() {
             )}
           </AnimatePresence>
         </motion.div>
-
-        {/* Footer Text */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-12 text-center text-gray-600 text-sm sm:text-base max-w-md"
-        >
-          (The "No" button doesn't work anyway 😉)
-        </motion.p>
       </div>
 
       {/* Celebration Modal */}
