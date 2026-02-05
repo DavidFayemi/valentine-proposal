@@ -1,112 +1,14 @@
-import { useState, useEffect } from "react";
-import { Heart, X } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { Heart } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import Confetti from "react-confetti";
-
-interface CelebrationModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-const CelebrationModal: React.FC<CelebrationModalProps> = ({
-  isOpen,
-  onClose,
-}) => {
-  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
-
-  useEffect(() => {
-    // Update on resize
-    const handleResize = () => {
-      setWindowSize({ width: window.innerWidth, height: window.innerHeight });
-    };
-
-    // Set initial window size
-    handleResize();
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  return (
-    <AnimatePresence>
-      {isOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center"
-          data-theme="caramellate"
-        >
-          {/* Confetti Background */}
-          <Confetti width={windowSize.width} height={windowSize.height} />
-
-          {/* Backdrop */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-black/30"
-            onClick={onClose}
-          />
-
-          {/* Modal Content */}
-          <motion.div
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0, opacity: 0 }}
-            transition={{ type: "spring", stiffness: 200, damping: 25 }}
-            className="relative modal-box bg-base-100 max-w-2xl w-full"
-          >
-            {/* Close Button */}
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={onClose}
-              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-            >
-              <X size={24} />
-            </motion.button>
-
-            {/* Content */}
-            <div className="text-center">
-              <motion.div
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{ repeat: Infinity, duration: 1.5 }}
-                className="mb-6"
-              >
-                <Heart
-                  size={80}
-                  className="text-pink-500 fill-pink-500 mx-auto"
-                  strokeWidth={1.5}
-                />
-              </motion.div>
-
-              <h2 className="text-4xl font-bold text-gray-800 mb-4">
-                🎉 Yay! 🎉
-              </h2>
-
-              <p className="text-xl text-gray-600 mb-8">
-                You've made me the happiest person! I love you so much! 💕
-              </p>
-
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={onClose}
-                className="btn btn-primary transition-all duration-300"
-              >
-                Close
-              </motion.button>
-            </div>
-          </motion.div>
-        </div>
-      )}
-    </AnimatePresence>
-  );
-};
 
 export default function App() {
   const [yesHovered, setYesHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [noScale, setNoScale] = useState(1);
-  const [showCelebration, setShowCelebration] = useState(false);
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
+  const modalRef = useRef<HTMLDialogElement>(null);
 
   // Detect mobile/tablet
   useEffect(() => {
@@ -118,22 +20,36 @@ export default function App() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  // Handle window resize for confetti
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const handleNoClick = () => {
     // Disappear immediately after 1 click
     setNoScale(0);
   };
 
   const handleYesClick = () => {
-    setShowCelebration(true);
+    modalRef.current?.showModal();
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-pink-50 via-rose-50 to-pink-100 relative overflow-hidden">
+    <div
+      className="min-h-screen bg-base-100 relative overflow-hidden"
+      data-theme="autumn"
+    >
       {/* Background Pattern */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-10 left-10 w-32 h-32 bg-pink-200 rounded-full opacity-20 blur-3xl" />
-        <div className="absolute bottom-20 right-20 w-40 h-40 bg-rose-200 rounded-full opacity-20 blur-3xl" />
-        <div className="absolute top-1/2 right-10 w-36 h-36 bg-pink-300 rounded-full opacity-10 blur-3xl" />
+        <div className="absolute top-10 left-10 w-32 h-32 bg-primary rounded-full opacity-10 blur-3xl" />
+        <div className="absolute bottom-20 right-20 w-40 h-40 bg-primary rounded-full opacity-10 blur-3xl" />
+        <div className="absolute top-1/2 right-10 w-36 h-36 bg-accent rounded-full opacity-5 blur-3xl" />
       </div>
 
       {/* Main Content */}
@@ -147,7 +63,7 @@ export default function App() {
         >
           <Heart
             size={120}
-            className="text-pink-500 fill-pink-500"
+            className="text-primary fill-primary"
             strokeWidth={1.5}
           />
         </motion.div>
@@ -157,9 +73,9 @@ export default function App() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-4xl sm:text-5xl md:text-6xl font-bold text-center text-gray-800 mb-12 leading-tight"
+          className="text-4xl sm:text-5xl md:text-6xl font-bold text-center text-base-content mb-12 leading-tight"
         >
-          Will you be my <span className="text-pink-500">valentine</span>?
+          Will you be my <span className="text-primary">valentine</span>?
         </motion.h1>
 
         {/* Buttons Container - Dynamic sizing based on no scale */}
@@ -203,22 +119,33 @@ export default function App() {
           </motion.button>
 
           {/* No Button - Shrinks and disappears */}
-          <AnimatePresence>
+          <AnimatePresence mode="popLayout">
             {noScale > 0 && (
               <motion.button
+                key="no-button"
                 onClick={handleNoClick}
+                initial={{ scale: 1, opacity: 1 }}
                 animate={{
                   scale: noScale,
-                  opacity: noScale > 0.2 ? 1 : noScale / 0.2,
+                  opacity: noScale,
                 }}
-                exit={{ scale: 0, opacity: 0 }}
+                exit={{
+                  scale: 0,
+                  opacity: 0,
+                  transition: {
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 30,
+                    duration: 0.4,
+                  },
+                }}
                 transition={{
                   type: "spring",
-                  stiffness: 200,
-                  damping: 15,
-                  duration: 0.3,
+                  stiffness: 150,
+                  damping: 20,
+                  mass: 1,
                 }}
-                className="btn btn-neutral transition-all duration-300 origin-center"
+                className="btn btn-neutral origin-center"
               >
                 No
               </motion.button>
@@ -228,10 +155,48 @@ export default function App() {
       </div>
 
       {/* Celebration Modal */}
-      <CelebrationModal
-        isOpen={showCelebration}
-        onClose={() => setShowCelebration(false)}
-      />
+      <dialog ref={modalRef} className="modal modal-bottom sm:modal-middle">
+        {/* Confetti Background */}
+        <Confetti width={windowSize.width} height={windowSize.height} />
+
+        <div className="modal-box">
+          <div className="text-center">
+            {/* Beating Heart */}
+            <motion.div
+              animate={{ scale: [1, 1.1, 1] }}
+              transition={{ repeat: Infinity, duration: 1.5 }}
+              className="mb-6"
+            >
+              <Heart
+                size={80}
+                className="text-primary fill-primary mx-auto"
+                strokeWidth={1.5}
+              />
+            </motion.div>
+
+            {/* Celebration Message */}
+            <h2 className="text-4xl font-bold text-base-content mb-4">
+              🎉 Yay! 🎉
+            </h2>
+
+            <p className="text-xl text-base-content/70 mb-8">
+              You've made me the happiest person! I love you so much! 💕
+            </p>
+
+            {/* Modal Actions */}
+            <div className="modal-action">
+              <form method="dialog">
+                <button className="btn btn-primary">Close</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        {/* Backdrop for closing modal on outside click */}
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
+      </dialog>
     </div>
   );
 }
