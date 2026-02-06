@@ -15,16 +15,43 @@ const generateLeafPositions = () => {
 const leafPositions = generateLeafPositions();
 
 export default function AutumnProposal() {
-  const [noScale, setNoScale] = useState(1);
-  const [noRotate, setNoRotate] = useState(0);
+  const [noClickCount, setNoClickCount] = useState(0);
   const modalRef = useRef<HTMLDialogElement>(null);
 
   const handleNoClick = () => {
-    // Send email asynchronously
-    sendResponseEmail("no");
-    // Spin and fade away
-    setNoRotate(720);
-    setNoScale(0);
+    const newClickCount = noClickCount + 1;
+    setNoClickCount(newClickCount);
+
+    // Send email asynchronously only on final disappearance
+    if (newClickCount >= 3) {
+      sendResponseEmail("no");
+    }
+  };
+
+  const getNoButtonText = () => {
+    switch (noClickCount) {
+      case 0:
+        return "Not yet";
+      case 1:
+        return "Think again 🥺?";
+      case 2:
+        return "Babe nauuuuu 😭";
+      default:
+        return "Nope";
+    }
+  };
+
+  const getNoButtonColor = () => {
+    switch (noClickCount) {
+      case 0:
+        return { borderColor: "#8b2e2e", color: "#8b2e2e" };
+      case 1:
+        return { borderColor: "#6b1f23", color: "#6b1f23" };
+      case 2:
+        return { borderColor: "#4a1419", color: "#4a1419" };
+      default:
+        return { borderColor: "#8b2e2e", color: "#8b2e2e" };
+    }
   };
 
   const handleYesClick = () => {
@@ -41,7 +68,7 @@ export default function AutumnProposal() {
         spread: 70,
         origin: { y: 0.6 },
         shapes: ["star"],
-        colors: ["#f97316", "#ea580c", "#dc2626", "#fbbf24"],
+        colors: ["#8b4513", "#a0522d", "#b22222", "#8b2e2e"],
       });
 
       // Additional burst
@@ -51,7 +78,7 @@ export default function AutumnProposal() {
           spread: 100,
           origin: { y: 0.4 },
           shapes: ["circle"],
-          colors: ["#fb923c", "#fcd34d", "#fca5a5"],
+          colors: ["#c41e3a", "#d4744a", "#a64d4d"],
         });
       }, 100);
     }, 300);
@@ -59,15 +86,15 @@ export default function AutumnProposal() {
 
   return (
     <div
-      className="min-h-screen bg-linear-to-br from-amber-50 via-orange-50 to-red-50 relative overflow-hidden selection:bg-orange-400 selection:text-white group"
+      className="min-h-screen bg-linear-to-br from-red-50 via-amber-50 to-red-100 relative overflow-hidden selection:bg-red-700 selection:text-white group"
       data-theme="autumn"
     >
       {/* Attribution */}
-      <div className="toast hidden group-hover:flex opacity-40 z-50">
+      {/* <div className="toast hidden group-hover:flex opacity-40 z-50">
         <div className="alert alert-outline">
           <span>By David Fayemi</span>
         </div>
-      </div>
+      </div> */}
 
       {/* Decorative Leaves - Falling Animation */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -88,14 +115,14 @@ export default function AutumnProposal() {
             }}
             className="absolute text-3xl"
           >
-            🍁
+            💗
           </motion.div>
         ))}
 
         {/* Gradient Orbs */}
-        <div className="absolute top-20 left-20 w-48 h-48 bg-linear-to-br from-orange-300 to-transparent rounded-full opacity-20 blur-3xl" />
-        <div className="absolute bottom-32 right-16 w-56 h-56 bg-linear-to-br from-red-400 to-transparent rounded-full opacity-15 blur-3xl" />
-        <div className="absolute top-1/2 left-1/3 w-40 h-40 bg-linear-to-br from-yellow-300 to-transparent rounded-full opacity-10 blur-3xl" />
+        <div className="absolute top-20 left-20 w-48 h-48 bg-linear-to-br from-red-600 to-transparent rounded-full opacity-20 blur-3xl" />
+        <div className="absolute bottom-32 right-16 w-56 h-56 bg-linear-to-br from-red-700 to-transparent rounded-full opacity-15 blur-3xl" />
+        <div className="absolute top-1/2 left-1/3 w-40 h-40 bg-linear-to-br from-amber-700 to-transparent rounded-full opacity-10 blur-3xl" />
       </div>
 
       {/* Main Content */}
@@ -113,7 +140,7 @@ export default function AutumnProposal() {
           >
             <Gift
               size={100}
-              className="text-orange-500"
+              className="text-red-700"
               fill="currentColor"
               strokeWidth={1.5}
             />
@@ -131,7 +158,7 @@ export default function AutumnProposal() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-5xl sm:text-6xl md:text-7xl font-black text-transparent bg-clip-text bg-linear-to-r from-orange-600 via-red-500 to-pink-600 mb-4 leading-tight"
+            className="text-5xl sm:text-6xl md:text-7xl font-black text-transparent bg-clip-text bg-linear-to-r from-red-700 via-red-600 to-red-800 mb-4 leading-tight"
           >
             Will You Be
           </motion.h1>
@@ -139,7 +166,7 @@ export default function AutumnProposal() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
-            className="text-4xl sm:text-5xl md:text-6xl font-black text-orange-700 mb-2"
+            className="text-4xl sm:text-5xl md:text-6xl font-black text-red-800 mb-2"
           >
             My Valentine?
           </motion.h2>
@@ -147,7 +174,7 @@ export default function AutumnProposal() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.7 }}
-            className="text-lg sm:text-xl text-amber-900 mt-4 font-medium"
+            className="text-lg sm:text-xl text-red-900 mt-4 font-medium"
           >
             Let's make this season unforgettable ✨
           </motion.p> */}
@@ -165,12 +192,12 @@ export default function AutumnProposal() {
             onClick={handleYesClick}
             whileHover={{
               scale: 1.1,
-              boxShadow: "0 0 30px rgba(251, 146, 60, 0.6)",
+              boxShadow: "0 0 30px rgba(196, 30, 58, 0.6)",
             }}
             whileTap={{ scale: 0.95 }}
             className="btn btn-lg relative overflow-hidden group"
             style={{
-              background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+              background: "linear-gradient(135deg, #8b2e2e 0%, #c41e3a 100%)",
               color: "white",
               border: "none",
               fontSize: "1.125rem",
@@ -195,21 +222,21 @@ export default function AutumnProposal() {
               transition={{ repeat: Infinity, duration: 1.5 }}
             >
               <Sparkles size={20} />
-              Yes, Absolutely!
+              Absolutely my loveeeeeee! 💗
             </motion.span>
           </motion.button>
 
-          {/* No Button - Spins away */}
+          {/* No Button - Changes text and gets darker */}
           <AnimatePresence mode="popLayout">
-            {noScale > 0 && (
+            {noClickCount < 3 && (
               <motion.button
-                key="no-button"
+                key={`no-button-${noClickCount}`}
                 onClick={handleNoClick}
                 initial={{ scale: 1, opacity: 1, rotate: 0 }}
                 animate={{
-                  scale: noScale,
-                  opacity: noScale,
-                  rotate: noRotate,
+                  scale: 1,
+                  opacity: 1,
+                  rotate: 0,
                 }}
                 exit={{
                   scale: 0,
@@ -229,31 +256,25 @@ export default function AutumnProposal() {
                   mass: 1,
                 }}
                 className="btn btn-outline btn-lg"
-                style={{
-                  borderColor: "#b45309",
-                  color: "#b45309",
-                }}
+                style={getNoButtonColor()}
               >
-                Nope
+                <motion.span
+                  key={`text-${noClickCount}`}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {getNoButtonText()}
+                </motion.span>
               </motion.button>
             )}
           </AnimatePresence>
         </motion.div>
-
-        {/* Small instruction text */}
-        {/* <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 1.2 }}
-          className="text-sm sm:text-base text-amber-700 mt-8 opacity-70"
-        >
-          (You can only say no once 😉)
-        </motion.p> */}
       </div>
 
       {/* Celebration Modal */}
       <dialog ref={modalRef} className="modal modal-bottom sm:modal-middle">
-        <div className="modal-box relative z-10 bg-linear-to-b from-orange-100 to-red-100 border-2 border-orange-400">
+        <div className="modal-box relative z-10 bg-linear-to-b from-red-100 to-red-200 border-2 border-red-700">
           <div className="text-center">
             {/* Celebration GIF */}
             <motion.div
@@ -274,16 +295,16 @@ export default function AutumnProposal() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-4xl font-black text-transparent bg-clip-text bg-linear-to-r from-orange-600 to-red-600 mb-3"
+              className="text-4xl font-black text-transparent bg-clip-text bg-linear-to-r from-red-700 to-red-900 mb-3"
             >
-              Get in jo! 🎉
+              Get in joor! 🎉
             </motion.h2>
 
             {/* <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="text-lg text-amber-900 mb-6 font-semibold"
+              className="text-lg text-red-900 mb-6 font-semibold"
             >
               You just made me the happiest person alive!
             </motion.p> */}
@@ -319,7 +340,7 @@ export default function AutumnProposal() {
                   className="btn btn-lg"
                   style={{
                     background:
-                      "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                      "linear-gradient(135deg, #8b2e2e 0%, #c41e3a 100%)",
                     color: "white",
                     border: "none",
                   }}
