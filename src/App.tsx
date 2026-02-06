@@ -49,8 +49,9 @@ export default function App() {
   return (
     <div
       className="min-h-screen bg-base-100 relative overflow-hidden selection:bg-primary selection:text-primary-content group"
-      data-theme="valentine"
+      data-theme="autumn"
     >
+      {/* Attribution */}
       <div className="toast hidden group-hover:flex opacity-40">
         <div className="alert alert-outline">
           <span>By David Fayemi</span>
