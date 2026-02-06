@@ -48,9 +48,14 @@ export default function App() {
 
   return (
     <div
-      className="min-h-screen bg-base-100 relative overflow-hidden"
-      data-theme="autumn"
+      className="min-h-screen bg-base-100 relative overflow-hidden selection:bg-primary selection:text-primary-content group"
+      data-theme="valentine"
     >
+      <div className="toast hidden group-hover:flex opacity-40">
+        <div className="alert alert-outline">
+          <span>By David Fayemi</span>
+        </div>
+      </div>
       {/* Background Pattern */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-10 left-10 w-32 h-32 bg-primary rounded-full opacity-10 blur-3xl" />
@@ -182,12 +187,8 @@ export default function App() {
 
             {/* Celebration Message */}
             <h2 className="text-4xl font-bold text-base-content mb-4">
-              🎉 Yay! 🎉
+              🎉 I LOVE YOU! 🎉
             </h2>
-
-            <p className="text-xl text-base-content/70 mb-8">
-              You've made me the happiest person! I love you so much! 💕
-            </p>
 
             {/* Modal Actions */}
             <div className="modal-action">
