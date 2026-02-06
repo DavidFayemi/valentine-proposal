@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Heart } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import Confetti from "react-confetti";
+import { sendResponseEmail } from "./lib/supabase";
 
 export default function App() {
   const [yesHovered, setYesHovered] = useState(false);
@@ -32,11 +33,16 @@ export default function App() {
   }, []);
 
   const handleNoClick = () => {
+    // Send email asynchronously (fire and forget)
+    sendResponseEmail("no");
     // Disappear immediately after 1 click
     setNoScale(0);
   };
 
   const handleYesClick = () => {
+    // Send email asynchronously (fire and forget)
+    sendResponseEmail("yes");
+    // Show celebration modal
     modalRef.current?.showModal();
   };
 
