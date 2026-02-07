@@ -123,127 +123,202 @@ export default function JackVersion() {
 
   return (
     <div className="min-h-screen bg-linear-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden selection:bg-purple-500 selection:text-white group">
-      {/* Video/Image Mosaic Background - Full Screen */}
-      <div className="fixed inset-0 w-screen h-screen overflow-hidden -z-10">
-        <div className="w-full h-full grid grid-cols-12 auto-rows-fr">
-          {/* Video 1 - 3 cols, 2 rows */}
-          <div className="col-span-3 row-span-2 overflow-hidden relative">
+      {/* Video mosaic background (subtle, greyish memory effect) - fills entire screen */}
+      <div className="absolute inset-0 z-0 pointer-events-none w-full h-full overflow-hidden">
+        <div
+          className="w-full h-full"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(12, 1fr)",
+            gridTemplateRows: "repeat(6, 1fr)",
+            gap: 0,
+          }}
+        >
+          {/* Row 1 */}
+          <div
+            className="relative overflow-hidden"
+            style={{
+              gridColumn: "span 3",
+              gridRow: "span 2",
+              backgroundColor: "#59168b",
+            }}
+          >
             <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover"
+              style={{ opacity: 0.45, filter: "grayscale(40%) contrast(0.95)" }}
               src="/VID-20260207-WA0035.mp4"
-              autoPlay
-              loop
-              muted
-              onError={(e) => {
-                (e.target as HTMLVideoElement).style.display = "none";
-              }}
-              className="w-full h-full object-cover grayscale opacity-40 hover:opacity-60 transition-opacity"
+              onError={(e) => (e.currentTarget.style.display = "none")}
             />
           </div>
-          {/* Image 1 - 2 cols, 1 row */}
-          <div className="col-span-2 row-span-1 overflow-hidden relative">
+          <div
+            className="relative overflow-hidden"
+            style={{
+              gridColumn: "span 4",
+              gridRow: "span 2",
+              backgroundColor: "#59168b",
+            }}
+          >
             <img
+              alt="memory"
+              className="w-full h-full object-top object-cover"
+              style={{ opacity: 0.45, filter: "grayscale(45%) contrast(0.9)" }}
               src="/IMG-20260207-WA0033.jpg"
-              alt="memory"
-              onError={(e) => {
-                (e.target as HTMLImageElement).style.display = "none";
-              }}
-              className="w-full h-full object-cover grayscale opacity-40 hover:opacity-60 transition-opacity"
+              onError={(e) => (e.currentTarget.style.display = "none")}
             />
           </div>
-          {/* Video 2 - 4 cols, 2 rows */}
-          <div className="col-span-4 row-span-2 overflow-hidden relative">
+          <div
+            className="relative overflow-hidden"
+            style={{
+              gridColumn: "span 5",
+              gridRow: "span 2",
+              backgroundColor: "#59168b",
+            }}
+          >
             <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover object-center "
+              style={{ opacity: 0.42, filter: "grayscale(50%) contrast(0.9)" }}
               src="/VID-20260207-WA0036.mp4"
-              autoPlay
-              loop
-              muted
-              onError={(e) => {
-                (e.target as HTMLVideoElement).style.display = "none";
-              }}
-              className="w-full h-full object-cover grayscale opacity-40 hover:opacity-60 transition-opacity"
+              onError={(e) => (e.currentTarget.style.display = "none")}
             />
           </div>
-          {/* Video 3 - 3 cols, 1 row */}
-          <div className="col-span-3 row-span-1 overflow-hidden relative">
-            <video
-              src="/VID-20260207-WA0037.mp4"
-              autoPlay
-              loop
-              muted
-              onError={(e) => {
-                (e.target as HTMLVideoElement).style.display = "none";
-              }}
-              className="w-full h-full object-cover grayscale opacity-40 hover:opacity-60 transition-opacity"
-            />
-          </div>
-
-          {/* Image 2 - 2 cols, 1 row */}
-          <div className="col-span-2 row-span-1 overflow-hidden relative">
+          {/* Row 3 */}
+          <div
+            className="relative overflow-hidden"
+            style={{
+              gridColumn: "span 4",
+              gridRow: "span 2",
+              backgroundColor: "#59168b",
+            }}
+          >
             <img
-              src="/IMG-20260207-WA0034.jpg"
               alt="memory"
-              onError={(e) => {
-                (e.target as HTMLImageElement).style.display = "none";
-              }}
-              className="w-full h-full object-cover grayscale opacity-40 hover:opacity-60 transition-opacity"
+              className="w-full h-full object-cover"
+              style={{ opacity: 0.4, filter: "grayscale(55%) contrast(0.9)" }}
+              src="/IMG-20260207-WA0034.jpg"
+              onError={(e) => (e.currentTarget.style.display = "none")}
             />
           </div>
-          {/* Video 4 - 3 cols, 2 rows */}
-          <div className="col-span-3 row-span-2 overflow-hidden relative">
+          <div
+            className="relative overflow-hidden"
+            style={{
+              gridColumn: "span 4",
+              gridRow: "span 2",
+              backgroundColor: "#59168b",
+            }}
+          >
             <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover"
+              style={{ opacity: 0.4, filter: "grayscale(50%) contrast(0.9)" }}
+              src="/VID-20260207-WA0037.mp4"
+              onError={(e) => (e.currentTarget.style.display = "none")}
+            />
+          </div>
+          <div
+            className="relative overflow-hidden"
+            style={{
+              gridColumn: "span 4",
+              gridRow: "span 2",
+              backgroundColor: "#59168b",
+            }}
+          >
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover"
+              style={{ opacity: 0.4, filter: "grayscale(50%) contrast(0.9)" }}
               src="/VID-20260207-WA0038.mp4"
-              autoPlay
-              loop
-              muted
-              onError={(e) => {
-                (e.target as HTMLVideoElement).style.display = "none";
-              }}
-              className="w-full h-full object-cover grayscale opacity-40 hover:opacity-60 transition-opacity"
+              onError={(e) => (e.currentTarget.style.display = "none")}
             />
           </div>
-          {/* Video 5 - 2 cols, 1 row */}
-          <div className="col-span-2 row-span-1 overflow-hidden relative">
+          {/* Row 5 */}
+          <div
+            className="relative overflow-hidden"
+            style={{
+              gridColumn: "span 2",
+              gridRow: "span 2",
+              backgroundColor: "#59168b",
+            }}
+          >
             <video
-              src="/VID-20260207-WA0039.mp4"
               autoPlay
-              loop
               muted
-              onError={(e) => {
-                (e.target as HTMLVideoElement).style.display = "none";
-              }}
-              className="w-full h-full object-cover grayscale opacity-40 hover:opacity-60 transition-opacity"
-            />
-          </div>
-          {/* Video 6 - 2 cols, 2 rows */}
-          <div className="col-span-2 row-span-2 overflow-hidden relative">
-            <video
+              loop
+              playsInline
+              className="w-full h-full object-cover"
+              style={{ opacity: 0.42, filter: "grayscale(48%) contrast(0.92)" }}
               src="/VID-20260207-WA0040.mp4"
-              autoPlay
-              loop
-              muted
-              onError={(e) => {
-                (e.target as HTMLVideoElement).style.display = "none";
-              }}
-              className="w-full h-full object-cover grayscale opacity-40 hover:opacity-60 transition-opacity"
+              onError={(e) => (e.currentTarget.style.display = "none")}
             />
           </div>
-          {/* Video 7 - 3 cols, 2 rows */}
-          <div className="col-span-3 row-span-2 overflow-hidden relative">
+          <div
+            className="relative overflow-hidden"
+            style={{
+              gridColumn: "span 3",
+              gridRow: "span 2",
+              backgroundColor: "#59168b",
+            }}
+          >
+            <img
+              alt="memory"
+              className="w-full h-full object-cover"
+              style={{ opacity: 0.41, filter: "grayscale(52%) contrast(0.88)" }}
+              src="/IMG-20260207-WA0034.jpg"
+              onError={(e) => (e.currentTarget.style.display = "none")}
+            />
+          </div>
+          <div
+            className="relative overflow-hidden"
+            style={{
+              gridColumn: "span 3",
+              gridRow: "span 2",
+              backgroundColor: "#59168b",
+            }}
+          >
             <video
-              src="/VID-20260207-WA0043.mp4"
               autoPlay
-              loop
               muted
-              onError={(e) => {
-                (e.target as HTMLVideoElement).style.display = "none";
-              }}
-              className="w-full h-full object-cover grayscale opacity-40 hover:opacity-60 transition-opacity"
+              loop
+              playsInline
+              className="w-full h-full object-cover"
+              style={{ opacity: 0.44, filter: "grayscale(42%) contrast(0.93)" }}
+              src="/VID-20260207-WA0043.mp4"
+              onError={(e) => (e.currentTarget.style.display = "none")}
+            />
+          </div>
+          <div
+            className="relative overflow-hidden"
+            style={{
+              gridColumn: "span 4",
+              gridRow: "span 2",
+              backgroundColor: "#59168b",
+            }}
+          >
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover"
+              style={{ opacity: 0.39, filter: "grayscale(58%) contrast(0.87)" }}
+              src="/VID-20260207-WA0044.mp4"
+              onError={(e) => (e.currentTarget.style.display = "none")}
             />
           </div>
         </div>
-
-        {/* Purple Overlay for faded effect */}
-        <div className="absolute inset-0 bg-purple-900/40 mix-blend-multiply" />
       </div>
 
       {/* Falling Hearts Animation */}
@@ -307,7 +382,7 @@ export default function JackVersion() {
                 >
                   {step === 3 ? (
                     <p className="text-2xl sm:text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-linear-to-r from-purple-300 via-pink-300 to-purple-300 leading-relaxed">
-                      Will you be my valentine?{" "}
+                      Will you be my valentine? <br></br>
                       <span className="text-base sm:text-lg font-light text-purple-200 italic">
                         (I promise to buy you chocolate)
                       </span>
@@ -491,7 +566,7 @@ export default function JackVersion() {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="text-4xl font-black text-transparent bg-clip-text bg-linear-to-r from-pink-400 to-purple-400 mb-3"
             >
-              Yes! 🎉
+              Yayyyy!!! 🎉
             </motion.h2>
 
             {/* Falling emojis */}
