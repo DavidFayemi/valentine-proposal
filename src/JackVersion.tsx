@@ -5,69 +5,57 @@ import { sendResponseEmail } from "./lib/supabase";
 
 export default function JackVersion() {
   const [displayedText, setDisplayedText] = useState("");
-  const [step, setStep] = useState(0); // 0: first message, 1: question
-  const [isTyping, setIsTyping] = useState(false);
+  const [step, setStep] = useState(0); // 0-3: different messages
+  const [isAnimating, setIsAnimating] = useState(false);
   const [showButtons, setShowButtons] = useState(false);
   const [noClickCount, setNoClickCount] = useState(0);
   const modalRef = useRef<HTMLDialogElement>(null);
 
   const messages = useMemo(
     () => [
-      "hey baby, I know i keep asking you important questions in the worst ways but...",
-      "Will you be my valentine?",
+      "Hey baby gangster, we've made some cute memories together and I'm looking forward to making a lot more",
+      "I really don't need a special day to love you, but Valentine seems like the perfect excuse to show you how much you mean to me",
+      "So...",
+      "Will you be my valentine? (I promise to buy you chocolate)",
     ],
     [],
   );
 
-  // Typing effect (character by character)
+  // Fade-in animation (like celebration modal)
   useEffect(() => {
-    if (!isTyping) return;
+    if (!isAnimating) return;
 
-    const targetText = messages[step];
-    let currentIndex = 0;
-    const typingSpeed = 50; // milliseconds per character
+    setDisplayedText(messages[step]);
+    setIsAnimating(false);
+  }, [step, isAnimating, messages]);
 
-    const interval = setInterval(() => {
-      if (currentIndex < targetText.length) {
-        setDisplayedText(targetText.substring(0, currentIndex + 1));
-        currentIndex++;
-      } else {
-        setIsTyping(false);
-        clearInterval(interval);
-      }
-    }, typingSpeed);
-
-    return () => clearInterval(interval);
-  }, [step, isTyping, messages]);
-
-  // Auto-start typing with delay only on first message
+  // Auto-start animation with delay only on first message
   useEffect(() => {
-    const delay = step === 0 ? 2000 : 0; // Long delay for first message, immediate for second
+    const delay = step === 0 ? 800 : 400;
     const timer = setTimeout(() => {
-      setIsTyping(true);
+      setIsAnimating(true);
     }, delay);
     return () => clearTimeout(timer);
   }, [step]);
 
-  // Show buttons only after typing is done
+  // Show buttons only on last step (step 3)
   useEffect(() => {
-    if (!isTyping && step === 1) {
+    if (!isAnimating && step === 3) {
       const timer = setTimeout(() => {
         setShowButtons(true);
-      }, 300); // Small delay to ensure smooth transition
+      }, 500);
       return () => clearTimeout(timer);
     } else {
       setShowButtons(false);
     }
-  }, [isTyping, step]);
+  }, [isAnimating, step]);
 
   const handleNext = () => {
-    if (step === 0) {
-      // Backspace effect
-      setIsTyping(false);
+    if (step < 3) {
       setDisplayedText("");
+      setIsAnimating(false);
       setTimeout(() => {
-        setStep(1);
+        setStep(step + 1);
       }, 300);
     }
   };
@@ -135,107 +123,159 @@ export default function JackVersion() {
 
   return (
     <div className="min-h-screen bg-linear-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden selection:bg-purple-500 selection:text-white group">
-      {/* Attribution */}
-      {/* <div className="toast hidden group-hover:flex opacity-40 z-50">
-        <div className="alert alert-outline">
-          <span>By David Fayemi</span>
+      {/* Video/Image Mosaic Background - Full Screen */}
+      <div className="fixed inset-0 w-screen h-screen overflow-hidden -z-10">
+        <div className="w-full h-full grid grid-cols-12 auto-rows-fr">
+          {/* Video 1 - 3 cols, 2 rows */}
+          <div className="col-span-3 row-span-2 overflow-hidden relative">
+            <video
+              src="/VID-20260207-WA0035.mp4"
+              autoPlay
+              loop
+              muted
+              onError={(e) => {
+                (e.target as HTMLVideoElement).style.display = "none";
+              }}
+              className="w-full h-full object-cover grayscale opacity-40 hover:opacity-60 transition-opacity"
+            />
+          </div>
+          {/* Image 1 - 2 cols, 1 row */}
+          <div className="col-span-2 row-span-1 overflow-hidden relative">
+            <img
+              src="/IMG-20260207-WA0033.jpg"
+              alt="memory"
+              onError={(e) => {
+                (e.target as HTMLImageElement).style.display = "none";
+              }}
+              className="w-full h-full object-cover grayscale opacity-40 hover:opacity-60 transition-opacity"
+            />
+          </div>
+          {/* Video 2 - 4 cols, 2 rows */}
+          <div className="col-span-4 row-span-2 overflow-hidden relative">
+            <video
+              src="/VID-20260207-WA0036.mp4"
+              autoPlay
+              loop
+              muted
+              onError={(e) => {
+                (e.target as HTMLVideoElement).style.display = "none";
+              }}
+              className="w-full h-full object-cover grayscale opacity-40 hover:opacity-60 transition-opacity"
+            />
+          </div>
+          {/* Video 3 - 3 cols, 1 row */}
+          <div className="col-span-3 row-span-1 overflow-hidden relative">
+            <video
+              src="/VID-20260207-WA0037.mp4"
+              autoPlay
+              loop
+              muted
+              onError={(e) => {
+                (e.target as HTMLVideoElement).style.display = "none";
+              }}
+              className="w-full h-full object-cover grayscale opacity-40 hover:opacity-60 transition-opacity"
+            />
+          </div>
+
+          {/* Image 2 - 2 cols, 1 row */}
+          <div className="col-span-2 row-span-1 overflow-hidden relative">
+            <img
+              src="/IMG-20260207-WA0034.jpg"
+              alt="memory"
+              onError={(e) => {
+                (e.target as HTMLImageElement).style.display = "none";
+              }}
+              className="w-full h-full object-cover grayscale opacity-40 hover:opacity-60 transition-opacity"
+            />
+          </div>
+          {/* Video 4 - 3 cols, 2 rows */}
+          <div className="col-span-3 row-span-2 overflow-hidden relative">
+            <video
+              src="/VID-20260207-WA0038.mp4"
+              autoPlay
+              loop
+              muted
+              onError={(e) => {
+                (e.target as HTMLVideoElement).style.display = "none";
+              }}
+              className="w-full h-full object-cover grayscale opacity-40 hover:opacity-60 transition-opacity"
+            />
+          </div>
+          {/* Video 5 - 2 cols, 1 row */}
+          <div className="col-span-2 row-span-1 overflow-hidden relative">
+            <video
+              src="/VID-20260207-WA0039.mp4"
+              autoPlay
+              loop
+              muted
+              onError={(e) => {
+                (e.target as HTMLVideoElement).style.display = "none";
+              }}
+              className="w-full h-full object-cover grayscale opacity-40 hover:opacity-60 transition-opacity"
+            />
+          </div>
+          {/* Video 6 - 2 cols, 2 rows */}
+          <div className="col-span-2 row-span-2 overflow-hidden relative">
+            <video
+              src="/VID-20260207-WA0040.mp4"
+              autoPlay
+              loop
+              muted
+              onError={(e) => {
+                (e.target as HTMLVideoElement).style.display = "none";
+              }}
+              className="w-full h-full object-cover grayscale opacity-40 hover:opacity-60 transition-opacity"
+            />
+          </div>
+          {/* Video 7 - 3 cols, 2 rows */}
+          <div className="col-span-3 row-span-2 overflow-hidden relative">
+            <video
+              src="/VID-20260207-WA0043.mp4"
+              autoPlay
+              loop
+              muted
+              onError={(e) => {
+                (e.target as HTMLVideoElement).style.display = "none";
+              }}
+              className="w-full h-full object-cover grayscale opacity-40 hover:opacity-60 transition-opacity"
+            />
+          </div>
         </div>
-      </div> */}
 
-      {/* Animated gradient orbs */}
-      <motion.div
-        animate={{
-          top: ["0%", "20%", "0%"],
-          left: ["0%", "10%", "0%"],
-        }}
-        transition={{ repeat: Infinity, duration: 8 }}
-        className="absolute top-0 left-0 w-96 h-96 bg-purple-500 rounded-full opacity-10 blur-3xl"
-      />
-      <motion.div
-        animate={{
-          bottom: ["0%", "10%", "0%"],
-          right: ["0%", "15%", "0%"],
-        }}
-        transition={{ repeat: Infinity, duration: 10 }}
-        className="absolute bottom-0 right-0 w-80 h-80 bg-indigo-500 rounded-full opacity-10 blur-3xl"
-      />
+        {/* Purple Overlay for faded effect */}
+        <div className="absolute inset-0 bg-purple-900/40 mix-blend-multiply" />
+      </div>
 
-      {/* Floating particles */}
+      {/* Falling Hearts Animation */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        {[...Array(15)].map((_, i) => (
+        {[...Array(5)].map((_, i) => (
           <motion.div
-            key={i}
+            key={`falling-heart-${i}`}
             initial={{
               left: Math.random() * 100 + "%",
-              top: Math.random() * 100 + "%",
-              opacity: 0,
+              top: -20,
+              opacity: 0.7,
+              scale: 0.8 + Math.random() * 0.4,
             }}
             animate={{
-              opacity: [0, 0.5, 0],
+              top: "100vh",
+              opacity: [0.7, 0.5, 0],
             }}
             transition={{
-              duration: 3 + Math.random() * 2,
+              duration: 6 + Math.random() * 3,
               repeat: Infinity,
-              delay: i * 0.15,
+              delay: i * 1.2,
+              ease: "linear",
             }}
-            className="absolute w-1 h-1 bg-purple-300 rounded-full"
-          />
-        ))}
-
-        {/* Love hearts decoration */}
-        {[...Array(8)].map((_, i) => (
-          <motion.div
-            key={`heart-${i}`}
-            initial={{
-              left: Math.random() * 100 + "%",
-              top: Math.random() * 100 + "%",
-              opacity: 0,
-              scale: 0.8,
-            }}
-            animate={{
-              opacity: [0, 0.6, 0],
-              scale: [0.8, 1, 0.8],
-            }}
-            transition={{
-              duration: 4 + Math.random() * 2,
-              repeat: Infinity,
-              delay: i * 0.4,
-            }}
-            className="absolute text-xl"
+            className="absolute text-2xl"
           >
-            ❤️
-          </motion.div>
-        ))}
-
-        {/* Sparkles */}
-        {[...Array(6)].map((_, i) => (
-          <motion.div
-            key={`sparkle-${i}`}
-            initial={{
-              left: Math.random() * 100 + "%",
-              top: Math.random() * 100 + "%",
-              opacity: 0,
-              scale: 0,
-            }}
-            animate={{
-              opacity: [0, 1, 0],
-              scale: [0, 1, 0],
-            }}
-            transition={{
-              duration: 2.5 + Math.random() * 1.5,
-              repeat: Infinity,
-              delay: i * 0.5,
-            }}
-            className="absolute text-lg"
-          >
-            🌸
+            💜
           </motion.div>
         ))}
       </div>
 
       {/* Main Content */}
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4 py-8">
-        {/* Name at top */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -245,50 +285,86 @@ export default function JackVersion() {
           <h1 className="text-5xl sm:text-6xl md:text-7xl font-black text-transparent bg-clip-text bg-linear-to-r from-purple-300 via-pink-300 to-purple-300">
             Doyin
           </h1>
-          <motion.div
-            animate={{ scaleX: [0, 1, 0] }}
-            transition={{ repeat: Infinity, duration: 2, delay: 0.5 }}
-            className="h-1 bg-linear-to-r from-purple-400 to-pink-400 w-24 mx-auto mt-4"
-          />
         </motion.div>
 
-        {/* Typing text container */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="max-w-2xl mx-auto mb-16"
-        >
-          <div className="min-h-32 flex items-center justify-center">
-            <motion.p
-              key={`text-${step}`}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
-              className="text-2xl sm:text-3xl md:text-4xl font-light text-center text-purple-100 leading-relaxed"
+        {/* Message Box - Only shown when there's text */}
+        <AnimatePresence mode="wait">
+          {displayedText.length > 0 && (
+            <motion.div
+              key={`message-${step}`}
+              initial={{ opacity: 0, scale: 0.8, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, y: -20 }}
+              transition={{ duration: 0.5 }}
+              className="w-full max-w-3xl mb-12"
             >
-              {displayedText}
-              <motion.span
-                animate={{ opacity: [1, 0] }}
-                transition={{ repeat: Infinity, duration: 0.8 }}
-                className="ml-2 text-pink-400"
-              >
-                |
-              </motion.span>
-            </motion.p>
-          </div>
-        </motion.div>
+              <div className="bg-linear-to-b from-purple-950 to-slate-950 border-2 border-purple-500 rounded-xl p-8 sm:p-10">
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.1 }}
+                  className="text-center"
+                >
+                  {step === 3 ? (
+                    <p className="text-2xl sm:text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-linear-to-r from-purple-300 via-pink-300 to-purple-300 leading-relaxed">
+                      Will you be my valentine?{" "}
+                      <span className="text-base sm:text-lg font-light text-purple-200 italic">
+                        (I promise to buy you chocolate)
+                      </span>
+                    </p>
+                  ) : (
+                    <p className="text-xl sm:text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-linear-to-r from-purple-300 via-pink-300 to-purple-300 leading-relaxed">
+                      {displayedText}
+                    </p>
+                  )}
+                </motion.div>
 
-        {/* Step 0: Next button */}
+                {/* Decorative elements for final message */}
+                {step === 3 && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.6, delay: 0.4 }}
+                    className="flex justify-center gap-4 mt-6"
+                  >
+                    <motion.span
+                      animate={{ scale: [1, 1.2, 1], rotate: [0, 10, -10, 0] }}
+                      transition={{ repeat: Infinity, duration: 2 }}
+                      className="text-3xl"
+                    >
+                      💜
+                    </motion.span>
+                    <motion.span
+                      animate={{ scale: [1.2, 1, 1.2], rotate: [-10, 10, -10] }}
+                      transition={{ repeat: Infinity, duration: 2, delay: 0.3 }}
+                      className="text-3xl"
+                    >
+                      ✨
+                    </motion.span>
+                    <motion.span
+                      animate={{ scale: [1, 1.2, 1], rotate: [10, -10, 10] }}
+                      transition={{ repeat: Infinity, duration: 2, delay: 0.6 }}
+                      className="text-3xl"
+                    >
+                      💜
+                    </motion.span>
+                  </motion.div>
+                )}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Next Button - shown when on steps 0-2 */}
         <AnimatePresence>
-          {step === 0 && !isTyping && displayedText.length > 0 && (
+          {step < 3 && displayedText.length > 0 && !isAnimating && (
             <motion.button
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5 }}
               onClick={handleNext}
-              className="px-8 py-3 bg-linear-to-r from-purple-500 to-pink-500 text-white font-bold rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
+              className="px-8 py-3 bg-linear-to-r from-purple-500 to-pink-500 text-white font-bold rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 mb-12"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -297,97 +373,94 @@ export default function JackVersion() {
           )}
         </AnimatePresence>
 
-        {/* Step 1: Yes/No buttons */}
+        {/* Yes/No buttons appear only on final step */}
         <AnimatePresence>
-          {step === 1 &&
-            !isTyping &&
-            showButtons &&
-            displayedText.length > 0 && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6 }}
-                className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-center justify-center w-full max-w-xl px-4"
+          {step === 3 && showButtons && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6 }}
+              className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-center justify-center w-full max-w-xl px-4"
+            >
+              {/* Yes Button */}
+              <motion.button
+                onClick={handleYesClick}
+                whileHover={{
+                  scale: 1.1,
+                  boxShadow: "0 0 30px rgba(236, 72, 153, 0.6)",
+                }}
+                whileTap={{ scale: 0.95 }}
+                className="btn btn-lg sm:btn-lg relative overflow-hidden group w-full sm:w-auto"
+                style={{
+                  background:
+                    "linear-gradient(135deg, #ec4899 0%, #db2777 100%)",
+                  color: "white",
+                  border: "none",
+                  fontSize: "1rem sm:1.125rem",
+                  fontWeight: "bold",
+                  padding: "16px 32px sm:12px sm:40px",
+                }}
               >
-                {/* Yes Button */}
+                <motion.span
+                  animate={{
+                    background: [
+                      "rgba(255,255,255,0)",
+                      "rgba(255,255,255,0.2)",
+                      "rgba(255,255,255,0)",
+                    ],
+                  }}
+                  transition={{ repeat: Infinity, duration: 2 }}
+                  className="absolute inset-0"
+                />
+                <motion.span
+                  className="relative"
+                  animate={{ scale: [1, 1.05, 1] }}
+                  transition={{ repeat: Infinity, duration: 1.5 }}
+                >
+                  Yes! 💕
+                </motion.span>
+              </motion.button>
+
+              {/* No Button */}
+              {noClickCount < 3 && (
                 <motion.button
-                  onClick={handleYesClick}
-                  whileHover={{
-                    scale: 1.1,
-                    boxShadow: "0 0 30px rgba(236, 72, 153, 0.6)",
+                  key={`no-button-${noClickCount}`}
+                  onClick={handleNoClick}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{
+                    scale: 0,
+                    opacity: 0,
+                    rotate: 1080,
+                    transition: {
+                      type: "spring",
+                      stiffness: 200,
+                      damping: 20,
+                      duration: 0.8,
+                    },
                   }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 150,
+                    damping: 20,
+                  }}
+                  className="btn btn-outline btn-lg w-full sm:w-auto"
+                  style={getNoButtonColor()}
+                  whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="btn btn-lg sm:btn-lg relative overflow-hidden group w-full sm:w-auto"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, #ec4899 0%, #db2777 100%)",
-                    color: "white",
-                    border: "none",
-                    fontSize: "1rem sm:1.125rem",
-                    fontWeight: "bold",
-                    padding: "16px 32px sm:12px sm:40px",
-                  }}
                 >
                   <motion.span
-                    animate={{
-                      background: [
-                        "rgba(255,255,255,0)",
-                        "rgba(255,255,255,0.2)",
-                        "rgba(255,255,255,0)",
-                      ],
-                    }}
-                    transition={{ repeat: Infinity, duration: 2 }}
-                    className="absolute inset-0"
-                  />
-                  <motion.span
-                    className="relative"
-                    animate={{ scale: [1, 1.05, 1] }}
-                    transition={{ repeat: Infinity, duration: 1.5 }}
-                  >
-                    Yes! 💕
-                  </motion.span>
-                </motion.button>
-
-                {/* No Button */}
-                {noClickCount < 3 && (
-                  <motion.button
-                    key={`no-button-${noClickCount}`}
-                    onClick={handleNoClick}
+                    key={`text-${noClickCount}`}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{
-                      scale: 0,
-                      opacity: 0,
-                      rotate: 1080,
-                      transition: {
-                        type: "spring",
-                        stiffness: 200,
-                        damping: 20,
-                        duration: 0.8,
-                      },
-                    }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 150,
-                      damping: 20,
-                    }}
-                    className="btn btn-outline btn-lg w-full sm:w-auto"
-                    style={getNoButtonColor()}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    transition={{ duration: 0.3 }}
                   >
-                    <motion.span
-                      key={`text-${noClickCount}`}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      {getNoButtonText()}
-                    </motion.span>
-                  </motion.button>
-                )}
-              </motion.div>
-            )}
+                    {getNoButtonText()}
+                  </motion.span>
+                </motion.button>
+              )}
+            </motion.div>
+          )}
         </AnimatePresence>
       </div>
 
