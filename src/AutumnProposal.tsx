@@ -86,7 +86,7 @@ export default function AutumnProposal() {
 
   return (
     <div
-      className="min-h-screen bg-linear-to-br from-red-50 via-amber-50 to-red-100 relative overflow-hidden selection:bg-red-700 selection:text-white group"
+      className="min-h-screen bg-linear-to-br from-red-50 via-amber-50 to-red-100 relative overflow-hidden selection:bg-red-700 selection:text-white group mx-auto max-w-6xl"
       data-theme="autumn"
     >
       {/* Attribution */}
@@ -95,6 +95,213 @@ export default function AutumnProposal() {
           <span>By David Fayemi</span>
         </div>
       </div> */}
+
+      {/* Video mosaic background (subtle, greyish memory effect) - fills entire screen */}
+      <div className="absolute inset-0 z-0 pointer-events-none w-full h-full overflow-hidden">
+        <div
+          className="w-full h-full"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(12, 1fr)",
+            gridTemplateRows: "repeat(6, 1fr)",
+            gap: 0,
+          }}
+        >
+          {/* Row 1 */}
+          <div
+            className="relative overflow-hidden"
+            style={{
+              gridColumn: "span 3",
+              gridRow: "span 2",
+              backgroundColor: "#6b1f23",
+            }}
+          >
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover"
+              style={{ opacity: 0.45, filter: "grayscale(40%) contrast(0.95)" }}
+              src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+              onError={(e) => (e.currentTarget.style.display = "none")}
+            />
+          </div>
+          <div
+            className="relative overflow-hidden"
+            style={{
+              gridColumn: "span 4",
+              gridRow: "span 2",
+              backgroundColor: "#6b1f23",
+            }}
+          >
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover"
+              style={{ opacity: 0.45, filter: "grayscale(45%) contrast(0.9)" }}
+              src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/boat.mp4"
+              onError={(e) => (e.currentTarget.style.display = "none")}
+            />
+          </div>
+          <div
+            className="relative overflow-hidden"
+            style={{
+              gridColumn: "span 5",
+              gridRow: "span 2",
+              backgroundColor: "#6b1f23",
+            }}
+          >
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover"
+              style={{ opacity: 0.42, filter: "grayscale(50%) contrast(0.9)" }}
+              src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/bee.mp4"
+              onError={(e) => (e.currentTarget.style.display = "none")}
+            />
+          </div>
+          {/* Row 3 */}
+          <div
+            className="relative overflow-hidden"
+            style={{
+              gridColumn: "span 4",
+              gridRow: "span 2",
+              backgroundColor: "#6b1f23",
+            }}
+          >
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover"
+              style={{ opacity: 0.4, filter: "grayscale(55%) contrast(0.9)" }}
+              src="https://www.w3schools.com/html/mov_bbb.mp4"
+              onError={(e) => (e.currentTarget.style.display = "none")}
+            />
+          </div>
+          <div
+            className="relative overflow-hidden"
+            style={{
+              gridColumn: "span 4",
+              gridRow: "span 2",
+              backgroundColor: "#6b1f23",
+            }}
+          >
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover"
+              style={{ opacity: 0.4, filter: "grayscale(50%) contrast(0.9)" }}
+              src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+              onError={(e) => (e.currentTarget.style.display = "none")}
+            />
+          </div>
+          <div
+            className="relative overflow-hidden"
+            style={{
+              gridColumn: "span 4",
+              gridRow: "span 2",
+              backgroundColor: "#6b1f23",
+            }}
+          >
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover"
+              style={{ opacity: 0.38, filter: "grayscale(60%) contrast(0.85)" }}
+              src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/boat.mp4"
+              onError={(e) => (e.currentTarget.style.display = "none")}
+            />
+          </div>
+          {/* Row 5 */}
+          <div
+            className="relative overflow-hidden"
+            style={{
+              gridColumn: "span 2",
+              gridRow: "span 2",
+              backgroundColor: "#6b1f23",
+            }}
+          >
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover"
+              style={{ opacity: 0.42, filter: "grayscale(48%) contrast(0.92)" }}
+              src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+              onError={(e) => (e.currentTarget.style.display = "none")}
+            />
+          </div>
+          <div
+            className="relative overflow-hidden"
+            style={{
+              gridColumn: "span 3",
+              gridRow: "span 2",
+              backgroundColor: "#6b1f23",
+            }}
+          >
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover"
+              style={{ opacity: 0.41, filter: "grayscale(52%) contrast(0.88)" }}
+              src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/bee.mp4"
+              onError={(e) => (e.currentTarget.style.display = "none")}
+            />
+          </div>
+          <div
+            className="relative overflow-hidden"
+            style={{
+              gridColumn: "span 3",
+              gridRow: "span 2",
+              backgroundColor: "#6b1f23",
+            }}
+          >
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover"
+              style={{ opacity: 0.44, filter: "grayscale(42%) contrast(0.93)" }}
+              src="https://www.w3schools.com/html/mov_bbb.mp4"
+              onError={(e) => (e.currentTarget.style.display = "none")}
+            />
+          </div>
+          <div
+            className="relative overflow-hidden"
+            style={{
+              gridColumn: "span 4",
+              gridRow: "span 2",
+              backgroundColor: "#6b1f23",
+            }}
+          >
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover"
+              style={{ opacity: 0.39, filter: "grayscale(58%) contrast(0.87)" }}
+              src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/boat.mp4"
+              onError={(e) => (e.currentTarget.style.display = "none")}
+            />
+          </div>
+        </div>
+      </div>
 
       {/* Decorative Leaves - Falling Animation */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -154,30 +361,24 @@ export default function AutumnProposal() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-center mb-12"
         >
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-5xl sm:text-6xl md:text-7xl font-black text-transparent bg-clip-text bg-linear-to-r from-red-700 via-red-600 to-red-800 mb-4 leading-tight"
-          >
-            Will You Be
-          </motion.h1>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="text-4xl sm:text-5xl md:text-6xl font-black text-red-800 mb-2"
-          >
-            My Valentine?
-          </motion.h2>
-          {/* <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.7 }}
-            className="text-lg sm:text-xl text-red-900 mt-4 font-medium"
-          >
-            Let's make this season unforgettable ✨
-          </motion.p> */}
+          <div className="mx-auto max-w-3xl w-full backdrop-blur-md bg-white/20 border border-white/10 rounded-3xl p-6 md:p-10 shadow-lg">
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="text-5xl sm:text-6xl md:text-7xl font-black text-transparent bg-clip-text bg-linear-to-r from-red-700 via-red-600 to-red-800 mb-4 leading-tight"
+            >
+              Will You Be
+            </motion.h1>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="text-4xl sm:text-5xl md:text-6xl font-black text-red-800 mb-2"
+            >
+              My Valentine?
+            </motion.h2>
+          </div>
         </motion.div>
 
         {/* Buttons Container */}
