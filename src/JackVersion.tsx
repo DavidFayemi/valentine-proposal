@@ -19,7 +19,7 @@ export default function JackVersion() {
     [],
   );
 
-  // Typing effect
+  // Typing effect (character by character)
   useEffect(() => {
     if (!isTyping) return;
 
@@ -161,26 +161,75 @@ export default function JackVersion() {
       />
 
       {/* Floating particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        {[...Array(15)].map((_, i) => (
           <motion.div
             key={i}
             initial={{
-              x: Math.random() * 100 + "%",
-              y: Math.random() * 100 + "%",
+              left: Math.random() * 100 + "%",
+              top: Math.random() * 100 + "%",
               opacity: 0,
             }}
             animate={{
-              y: [0, -20, 0],
               opacity: [0, 0.5, 0],
             }}
             transition={{
               duration: 3 + Math.random() * 2,
               repeat: Infinity,
-              delay: i * 0.1,
+              delay: i * 0.15,
             }}
             className="absolute w-1 h-1 bg-purple-300 rounded-full"
           />
+        ))}
+
+        {/* Love hearts decoration */}
+        {[...Array(8)].map((_, i) => (
+          <motion.div
+            key={`heart-${i}`}
+            initial={{
+              left: Math.random() * 100 + "%",
+              top: Math.random() * 100 + "%",
+              opacity: 0,
+              scale: 0.8,
+            }}
+            animate={{
+              opacity: [0, 0.6, 0],
+              scale: [0.8, 1, 0.8],
+            }}
+            transition={{
+              duration: 4 + Math.random() * 2,
+              repeat: Infinity,
+              delay: i * 0.4,
+            }}
+            className="absolute text-xl"
+          >
+            ❤️
+          </motion.div>
+        ))}
+
+        {/* Sparkles */}
+        {[...Array(6)].map((_, i) => (
+          <motion.div
+            key={`sparkle-${i}`}
+            initial={{
+              left: Math.random() * 100 + "%",
+              top: Math.random() * 100 + "%",
+              opacity: 0,
+              scale: 0,
+            }}
+            animate={{
+              opacity: [0, 1, 0],
+              scale: [0, 1, 0],
+            }}
+            transition={{
+              duration: 2.5 + Math.random() * 1.5,
+              repeat: Infinity,
+              delay: i * 0.5,
+            }}
+            className="absolute text-lg"
+          >
+            🌸
+          </motion.div>
         ))}
       </div>
 
@@ -232,7 +281,7 @@ export default function JackVersion() {
 
         {/* Step 0: Next button */}
         <AnimatePresence>
-          {step === 0 && !isTyping && (
+          {step === 0 && !isTyping && displayedText.length > 0 && (
             <motion.button
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
