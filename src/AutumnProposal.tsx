@@ -140,7 +140,7 @@ export default function AutumnProposal() {
               className="w-full h-full object-cover"
               style={{ opacity: 0.45, filter: "grayscale(45%) contrast(0.9)" }}
               src="/IMG-20260207-WA0008.jpg"
-              onError={(e) => (e.style.display = "none")}
+              onError={(e) => (e.currentTarget.style.display = "none")}
             />
           </div>
           <div
@@ -176,7 +176,7 @@ export default function AutumnProposal() {
               className="w-full h-full object-cover"
               style={{ opacity: 0.4, filter: "grayscale(55%) contrast(0.9)" }}
               src="/IMG-20260207-WA0009.jpg"
-              onError={(e) => (e.style.display = "none")}
+              onError={(e) => (e.currentTarget.style.display = "none")}
             />
           </div>
           <div
@@ -211,7 +211,7 @@ export default function AutumnProposal() {
               className="w-full h-full object-cover"
               style={{ opacity: 0.38, filter: "grayscale(60%) contrast(0.85)" }}
               src="/IMG-20260207-WA0010.jpg"
-              onError={(e) => (e.style.display = "none")}
+              onError={(e) => (e.currentTarget.style.display = "none")}
             />
           </div>
           {/* Row 5 */}
@@ -247,7 +247,7 @@ export default function AutumnProposal() {
               className="w-full h-full object-cover"
               style={{ opacity: 0.41, filter: "grayscale(52%) contrast(0.88)" }}
               src="/IMG-20260207-WA0012.jpg"
-              onError={(e) => (e.style.display = "none")}
+              onError={(e) => (e.currentTarget.style.display = "none")}
             />
           </div>
           <div
