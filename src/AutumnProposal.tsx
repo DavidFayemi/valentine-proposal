@@ -335,8 +335,8 @@ export default function AutumnProposal() {
           >
             <Gift
               size={100}
-              className="text-red-700"
-              fill="currentColor"
+              className="text-white"
+              fill="#c10007"
               strokeWidth={1.5}
             />
           </motion.div>
