@@ -86,7 +86,7 @@ export default function AutumnProposal() {
 
   return (
     <div
-      className="min-h-screen bg-linear-to-br from-red-50 via-amber-50 to-red-100 relative overflow-hidden selection:bg-red-700 selection:text-white group mx-auto max-w-6xl"
+      className="min-h-screen bg-linear-to-br from-red-50 via-amber-50 to-red-100 relative overflow-hidden selection:bg-red-700 selection:text-white group mx-auto max-w-390"
       data-theme="autumn"
     >
       {/* Attribution */}
@@ -123,7 +123,7 @@ export default function AutumnProposal() {
               playsInline
               className="w-full h-full object-cover"
               style={{ opacity: 0.45, filter: "grayscale(40%) contrast(0.95)" }}
-              src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+              src="/VID-20260207-WA0006.mp4"
               onError={(e) => (e.currentTarget.style.display = "none")}
             />
           </div>
@@ -135,15 +135,12 @@ export default function AutumnProposal() {
               backgroundColor: "#6b1f23",
             }}
           >
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
+            <img
+              alt="memory"
               className="w-full h-full object-cover"
               style={{ opacity: 0.45, filter: "grayscale(45%) contrast(0.9)" }}
-              src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/boat.mp4"
-              onError={(e) => (e.currentTarget.style.display = "none")}
+              src="/IMG-20260207-WA0008.jpg"
+              onError={(e) => (e.style.display = "none")}
             />
           </div>
           <div
@@ -161,7 +158,7 @@ export default function AutumnProposal() {
               playsInline
               className="w-full h-full object-cover"
               style={{ opacity: 0.42, filter: "grayscale(50%) contrast(0.9)" }}
-              src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/bee.mp4"
+              src="/VID-20260207-WA0011.mp4"
               onError={(e) => (e.currentTarget.style.display = "none")}
             />
           </div>
@@ -174,15 +171,12 @@ export default function AutumnProposal() {
               backgroundColor: "#6b1f23",
             }}
           >
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
+            <img
+              alt="memory"
               className="w-full h-full object-cover"
               style={{ opacity: 0.4, filter: "grayscale(55%) contrast(0.9)" }}
-              src="https://www.w3schools.com/html/mov_bbb.mp4"
-              onError={(e) => (e.currentTarget.style.display = "none")}
+              src="/IMG-20260207-WA0009.jpg"
+              onError={(e) => (e.style.display = "none")}
             />
           </div>
           <div
@@ -200,7 +194,7 @@ export default function AutumnProposal() {
               playsInline
               className="w-full h-full object-cover"
               style={{ opacity: 0.4, filter: "grayscale(50%) contrast(0.9)" }}
-              src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+              src="/VID-20260207-WA0013.mp4"
               onError={(e) => (e.currentTarget.style.display = "none")}
             />
           </div>
@@ -212,15 +206,12 @@ export default function AutumnProposal() {
               backgroundColor: "#6b1f23",
             }}
           >
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
+            <img
+              alt="memory"
               className="w-full h-full object-cover"
               style={{ opacity: 0.38, filter: "grayscale(60%) contrast(0.85)" }}
-              src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/boat.mp4"
-              onError={(e) => (e.currentTarget.style.display = "none")}
+              src="/IMG-20260207-WA0010.jpg"
+              onError={(e) => (e.style.display = "none")}
             />
           </div>
           {/* Row 5 */}
@@ -239,7 +230,7 @@ export default function AutumnProposal() {
               playsInline
               className="w-full h-full object-cover"
               style={{ opacity: 0.42, filter: "grayscale(48%) contrast(0.92)" }}
-              src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+              src="/VID-20260207-WA0014.mp4"
               onError={(e) => (e.currentTarget.style.display = "none")}
             />
           </div>
@@ -251,15 +242,12 @@ export default function AutumnProposal() {
               backgroundColor: "#6b1f23",
             }}
           >
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
+            <img
+              alt="memory"
               className="w-full h-full object-cover"
               style={{ opacity: 0.41, filter: "grayscale(52%) contrast(0.88)" }}
-              src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/bee.mp4"
-              onError={(e) => (e.currentTarget.style.display = "none")}
+              src="/IMG-20260207-WA0012.jpg"
+              onError={(e) => (e.style.display = "none")}
             />
           </div>
           <div
@@ -277,7 +265,7 @@ export default function AutumnProposal() {
               playsInline
               className="w-full h-full object-cover"
               style={{ opacity: 0.44, filter: "grayscale(42%) contrast(0.93)" }}
-              src="https://www.w3schools.com/html/mov_bbb.mp4"
+              src="/VID-20260207-WA0015.mp4"
               onError={(e) => (e.currentTarget.style.display = "none")}
             />
           </div>
@@ -296,7 +284,7 @@ export default function AutumnProposal() {
               playsInline
               className="w-full h-full object-cover"
               style={{ opacity: 0.39, filter: "grayscale(58%) contrast(0.87)" }}
-              src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/boat.mp4"
+              src="/VID-20260207-WA0016.mp4"
               onError={(e) => (e.currentTarget.style.display = "none")}
             />
           </div>
@@ -366,7 +354,7 @@ export default function AutumnProposal() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-5xl sm:text-6xl md:text-7xl font-black text-transparent bg-clip-text bg-linear-to-r from-red-700 via-red-600 to-red-800 mb-4 leading-tight"
+              className="text-5xl sm:text-6xl md:text-7xl font-black text-white mb-4 leading-tight"
             >
               Will You Be
             </motion.h1>
@@ -374,7 +362,7 @@ export default function AutumnProposal() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="text-4xl sm:text-5xl md:text-6xl font-black text-red-800 mb-2"
+              className="text-4xl sm:text-5xl md:text-6xl font-black text-white mb-2"
             >
               My Valentine?
             </motion.h2>
@@ -456,8 +444,16 @@ export default function AutumnProposal() {
                   damping: 20,
                   mass: 1,
                 }}
-                className="btn btn-outline btn-lg"
-                style={getNoButtonColor()}
+                whileHover={{ scale: 1.08 }}
+                whileTap={{ scale: 0.95 }}
+                className="btn btn-lg font-bold text-lg shadow-lg"
+                style={{
+                  borderWidth: "3px",
+                  backgroundColor: getNoButtonColor().color,
+                  color: "white",
+                  padding: "14px 48px",
+                  borderColor: getNoButtonColor().borderColor,
+                }}
               >
                 <motion.span
                   key={`text-${noClickCount}`}
