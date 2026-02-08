@@ -1,4 +1,5 @@
-﻿import { useState, useRef, useMemo } from "react";
+﻿/* eslint-disable react-hooks/purity */
+import { useState, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import confetti from "canvas-confetti";
 import { sendResponseEmail } from "./lib/supabase";
@@ -157,34 +158,36 @@ export default function JackVersion() {
             Yes
           </motion.button>
 
-          {noClickCount < 3 && (
-            <motion.button
-              key={`no-button-${noClickCount}`}
-              onClick={handleNoClick}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{
-                opacity: 1,
-                y: 0,
-                x: currentDodge.x,
-                rotate: currentDodge.rotate,
-              }}
-              exit={{
-                scale: 0,
-                opacity: 0,
-                rotate: 120,
-                transition: { duration: 0.4 },
-              }}
-              transition={{ type: "spring", stiffness: 150, damping: 16 }}
-              whileHover={{
-                x: currentDodge.x + (noClickCount % 2 === 0 ? -16 : 16),
-                y: currentDodge.y - 6,
-                scale: 1.02,
-              }}
-              className="btn btn-outline btn-secondary w-full sm:w-auto rounded-full px-12 py-4 text-sm uppercase tracking-[0.35em] sm:px-10 sm:py-3 sm:text-xs"
-            >
-              {getNoButtonText()}
-            </motion.button>
-          )}
+          <AnimatePresence>
+            {noClickCount < 3 && (
+              <motion.button
+                key={`no-button-${noClickCount}`}
+                onClick={handleNoClick}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                  x: currentDodge.x,
+                  rotate: currentDodge.rotate,
+                }}
+                exit={{
+                  scale: 0,
+                  opacity: 0,
+                  rotate: 120,
+                  transition: { duration: 0.4 },
+                }}
+                transition={{ type: "spring", stiffness: 150, damping: 16 }}
+                whileHover={{
+                  x: currentDodge.x + (noClickCount % 2 === 0 ? -16 : 16),
+                  y: currentDodge.y - 6,
+                  scale: 1.02,
+                }}
+                className="btn btn-outline btn-secondary w-full sm:w-auto rounded-full px-12 py-4 text-sm uppercase tracking-[0.35em] sm:px-10 sm:py-3 sm:text-xs"
+              >
+                {getNoButtonText()}
+              </motion.button>
+            )}
+          </AnimatePresence>
         </motion.div>
       </div>
 
