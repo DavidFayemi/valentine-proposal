@@ -1,7 +1,17 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Montserrat:wght@400;500;600&display=swap");
 @plugin "daisyui" {
   themes:
     valentine --default,
     caramellatte,
     autumn;
+}
+
+:root {
+  font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.ore-title {
+  font-family: "Playfair Display", "Times New Roman", serif;
+  letter-spacing: -0.01em;
 }
